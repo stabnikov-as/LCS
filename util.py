@@ -20,13 +20,13 @@ def compute_lcs_table(X, Y):
                 l[i, j] = max(l[i - 1, j], l[i, j - 1])
     return l
 
-
 def print_table(l, X, Y):
     '''
+    Prints LCS table
     :param l: table, a numpy 2d array
     :param X: word 1
     :param Y: word 2
-    :return: prints lcs table with headers and legend
+    :return: none
     '''
     # print headers
     print('      |   j {a}'.format(a=' '.join([str(i) for i in range(l.shape[1])])))
@@ -37,3 +37,32 @@ def print_table(l, X, Y):
     # print the table row by row
     for i in range(1, l.shape[0]):
         print('{i}  {b}  |     {a}'.format(a=' '.join([str(int(i)) for i in l[i, ...]]), i=i, b=X[i - 1]))
+
+def assemble_lcs(X, Y, l):
+    '''
+    Assembles longest common subsequence of 2 words, using LCS table
+    :param X: First word, string
+    :param Y: Second word, string
+    :param l: LCS table, numpy array with dimensions len(X) x len(Y)
+    :param i: current index in first word (in the table, since it has len(X) + 1 rows), int
+    :param j: current index in second word (in the table, since it has len(X) + 1 rows), int
+    :return: LCS, string Longest common subsequence
+    '''
+    # Find the lengths of words
+    i, j = l.shape
+    i -= 1
+    j -= 1
+    # If the current table element is zero, that means that the longest common subsequence is an empty string
+    if l[i,j] == 0:
+        return ''
+    # Else if the last characters are equal means that it is the last character in the LCS
+    # Add it to the end and call the same procedure with words without last characters
+    elif X[i-1] == Y[j-1]:
+        return assemble_lcs(X, Y, l[:-1, :-1]) + X[i-1]
+    # else, if the letters are not the same, call the procedure with one of the words reduced by one letter
+    # whichever LCS is going to be longer
+    elif l[i,j-1] < l[i-1, j]:
+        return assemble_lcs(X, Y, l[:-1, :])
+    else:
+        return assemble_lcs(X, Y, l[:, :-1])
+
