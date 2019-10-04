@@ -29,8 +29,8 @@ def print_table(l, X, Y):
     :return: prints lcs table with headers and legend
     '''
     # print headers
-    print('      |   j {a}'.format(a=''.join([(str(i) + ' ') for i in range(l.shape[1])])))
-    print('      |  yj   {a}'.format(a=''.join([(i + ' ') for i in Y])))
+    print('      |   j {a}'.format(a=' '.join([str(i) for i in range(l.shape[1])])))
+    print('      |  yj   {a}'.format(a=' '.join([i for i in Y])))
     print('i  xi |l[i,j]')
     # print first row, since it's special
     print('0     |     {a}'.format(a=' '.join([str(int(i)) for i in l[0, ...]])))
