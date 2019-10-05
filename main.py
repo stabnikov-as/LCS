@@ -1,5 +1,5 @@
 
-import util
+import lcs
 
 X = 'CATCGA'
 Y = 'GTACCGTCA'
@@ -13,12 +13,12 @@ def find_and_print_lcs(X, Y):
     :return: LCS, string
     '''
     # Find LCS table - a table containing lengths of longest common substrings of Xi and Yj
-    l = util.compute_lcs_table(X,Y)
+    l = lcs.compute_lcs_table(X, Y)
     # Print the found table
-    util.print_table(l, X, Y)
+    lcs.print_table(l, X, Y)
     # Assemble lcs using words and table
-    lcs = util.assemble_lcs(X, Y, l)
-    print('\nLCS = ' + lcs)
-    return lcs
+    LCS = lcs.assemble_lcs(X, Y, l)
+    print('\nLCS = ' + LCS)
+    return LCS
 
 find_and_print_lcs(X, Y)
