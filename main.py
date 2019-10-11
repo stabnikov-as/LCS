@@ -35,7 +35,6 @@ def transform_strings(X, Y, costs, operations):
     # Assemble the transformation
     # This doesn't really do anything
     # Since we already know what the transformed string is
-    # Just constructs the sequence of operations that transform one string to another
     tr.assemble_transformation(X, Y, op)
 
 X = 'CATCGA'
