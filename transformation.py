@@ -86,7 +86,7 @@ def print_transformation_table(cost, op, X, Y, operations):
 
 def assemble_transformation(X, Y, op):
     '''
-    Procedure that transforms one string to another
+    Function that just constructs the sequence of operations that transform one string to another
     :param X: first word
     :param Y: second word
     :param op: a 2d numpy array with steps to convert all the Xi to all the Yj
