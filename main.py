@@ -1,5 +1,6 @@
 
 import lcs
+import transformation
 
 X = 'CATCGA'
 Y = 'GTACCGTCA'
@@ -15,7 +16,7 @@ def find_and_print_lcs(X, Y):
     # Find LCS table - a table containing lengths of longest common substrings of Xi and Yj
     l = lcs.compute_lcs_table(X, Y)
     # Print the found table
-    lcs.print_table(l, X, Y)
+    lcs.print_lcs_table(l, X, Y)
     # Assemble lcs using words and table
     LCS = lcs.assemble_lcs(X, Y, l)
     print('\nLCS = ' + LCS)

@@ -1,5 +1,6 @@
 import numpy as np
-def compute_lcs_table(X, Y):
+
+def compute_transformation_table(X, Y):
     '''
     Procedure to compute the LCS table
     :param X: word 1
@@ -20,7 +21,7 @@ def compute_lcs_table(X, Y):
                 l[i, j] = max(l[i - 1, j], l[i, j - 1])
     return l
 
-def print_lcs_table(l, X, Y):
+def print_transformation_table(l, X, Y):
     '''
     Prints LCS table
     :param l: table, a numpy 2d array
@@ -38,7 +39,7 @@ def print_lcs_table(l, X, Y):
     for i in range(1, l.shape[0]):
         print('{i}  {b}  |     {a}'.format(a=' '.join([str(int(i)) for i in l[i, ...]]), i=i, b=X[i - 1]))
 
-def assemble_lcs(X, Y, l):
+def assemble_transformation(X, Y, l):
     '''
     Assembles longest common subsequence of 2 words, using LCS table
     :param X: First word, string
