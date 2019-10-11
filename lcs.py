@@ -12,7 +12,7 @@ def compute_lcs_table(X, Y):
     # go through each word filling the table
     for i in range(1, len(X) + 1):
         for j in range(1, len(Y) + 1):
-            # If current letters match, increment previous (i-1, j-1) table element
+            # If current characters match, increment previous (i-1, j-1) table element
             # Else take the previous one, the LCS hasn't changed
             if X[i - 1] == Y[j - 1]:
                 l[i, j] = l[i - 1, j - 1] + 1
@@ -50,6 +50,7 @@ def assemble_lcs(X, Y, l):
     '''
     # Find the lengths of words
     i, j = l.shape
+    # Set current indeces to the last characters
     i -= 1
     j -= 1
     # If the current table element is zero, that means that the longest common subsequence is an empty string
@@ -59,7 +60,7 @@ def assemble_lcs(X, Y, l):
     # Add it to the end and call the same procedure with words without last characters
     elif X[i-1] == Y[j-1]:
         return assemble_lcs(X, Y, l[:-1, :-1]) + X[i-1]
-    # else, if the letters are not the same, call the procedure with one of the words reduced by one letter
+    # else, if the characters are not the same, call the procedure with one of the words reduced by one character
     # whichever LCS is going to be longer
     elif l[i,j-1] < l[i-1, j]:
         return assemble_lcs(X, Y, l[:-1, :])
