@@ -24,7 +24,7 @@ def find_and_print_lcs(X, Y):
 
 #find_and_print_lcs(X, Y)
 
-operations = ['copy', 'remove', 'delete', 'insert']
+operations = ['copy', 'rep', 'del', 'ins']
 costs = [-1, 1, 2, 2]
 
 X = 'ACAAGC'
@@ -32,4 +32,4 @@ Y = 'CCGT'
 
 cost, op = tr.compute_transformation_table(X, Y, costs)
 
-lcs.print_lcs_table(op, X, Y)
+tr.print_transformation_table(cost, op, X, Y, operations)
