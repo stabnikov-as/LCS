@@ -2,10 +2,6 @@
 import lcs
 import transformation as tr
 
-X = 'CATCGA'
-Y = 'GTACCGTCA'
-# X = 'popa'
-# Y = 'sholpya'
 
 def find_and_print_lcs(X, Y):
     '''
@@ -22,14 +18,39 @@ def find_and_print_lcs(X, Y):
     print('\nLCS = ' + LCS)
     return LCS
 
-#find_and_print_lcs(X, Y)
+def transform_strings(X, Y, costs, operations):
+    '''
+    A function to transform one string to another
+    :param X: str, first work
+    :param Y: str, second word
+    :param cost: list of ints, cost of operations
+    :param operations: list of strings, the names of operations
+    :return: nothing
+    '''
 
-operations = ['copy', 'rep', 'del', 'ins']
-costs = [-1, 1, 2, 2]
+    # assemble transformation and operations tables
+    cost, op = tr.compute_transformation_table(X, Y, costs)
+    # Print the found table
+    tr.print_transformation_table(cost, op, X, Y, operations)
+    # Assemble the transformation
+    # This doesn't really do anything
+    # Since we already know what the transformed string is
+    tr.assemble_transformation(X, Y, op)
+
+X = 'CATCGA'
+Y = 'GTACCGTCA'
+
+#find_and_print_lcs(X, Y)
 
 X = 'ACAAGC'
 Y = 'CCGT'
 
-cost, op = tr.compute_transformation_table(X, Y, costs)
+operations = ['copy', 'rep', 'del', 'ins']
+costs = [-1, 1, 2, 2]
 
-tr.print_transformation_table(cost, op, X, Y, operations)
+#transform_strings(X, Y, costs, operations)
+
+
+
+
+

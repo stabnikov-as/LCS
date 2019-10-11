@@ -14,6 +14,7 @@ def compute_transformation_table(X, Y, costs):
     # initialize table
     cost = np.zeros((len(X) + 1, len(Y) + 1), dtype = int)
     op   = np.zeros((len(X) + 1, len(Y) + 1), dtype = int)
+    op[0, 0] = -1
     for i in range(1, len(X) + 1):
         op[i, 0] = 2
         cost[i, 0] = cost[i-1, 0] + costs[op[i, 0]]
@@ -83,25 +84,37 @@ def print_transformation_table(cost, op, X, Y, operations):
                 add = ' ' + X[i-1]
             print('{0:^12s}'.format(operations[op[i, j]] + add), end='')
 
-def assemble_transformation(X, Y, l):
+def assemble_transformation(X, Y, op):
+    '''
+    Procedure that transforms one string to another
+    :param X: first word
+    :param Y: second word
+    :param op: a 2d numpy array with steps to convert all the Xi to all the Yj
+    :return: a current transformation state, in a form of a string
+    '''
 
     # Find the lengths of words
-    i, j = l.shape
+    i, j = op.shape
+    # Set current indeces to the last characters in strings
     i -= 1
     j -= 1
 
-    # If the current table element is zero, that means that the longest common subsequence is an empty string
-    if l[i,j] == 0:
+    # If the current table element is minus one, that means that we are trying to convert two transform one empty string to another
+    if op[i,j] == -1:
         return ''
 
-    # Else if the last characters are equal means that it is the last character in the LCS
-    # Add it to the end and call the same procedure with words without last characters
-    elif X[i-1] == Y[j-1]:
-        return assemble_lcs(X, Y, l[:-1, :-1]) + X[i-1]
-    # else, if the letters are not the same, call the procedure with one of the words reduced by one letter
-    # whichever LCS is going to be longer
-    elif l[i,j-1] < l[i-1, j]:
-        return assemble_lcs(X, Y, l[:-1, :])
-    else:
-        return assemble_lcs(X, Y, l[:, :-1])
+    # Based on the current table element, decide which operation was last
+    # and recursively call the procedure accordingly
 
+    # Last character was copied from X to Y, it was teh same
+    elif op[i, j] == 0:
+        return assemble_transformation(X, Y, op[:-1, :-1]) + X[i - 1]
+    # One character replaced by another
+    elif op[i, j] == 1:
+        return assemble_transformation(X, Y, op[:-1, :-1]) + Y[j - 1]
+    # Deleted character
+    elif op[i, j] == 2:
+        return assemble_transformation(X, Y, op[:-1, :])
+    # Inserted character
+    else:
+        return assemble_transformation(X, Y, op[:, :-1])   + Y[j - 1]
