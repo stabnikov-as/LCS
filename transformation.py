@@ -1,34 +1,38 @@
 import numpy as np
 
-def compute_transformation_table(X, Y):
-    '''
-    Procedure to compute the LCS table
-    :param X: word 1
-    :param Y: word 2
-    :return: returns lcs table for two words as a 2d numpy array
-    '''
+def compute_transformation_table(X, Y, costs):
+
     # initialize table
-    l = np.zeros((len(X) + 1, len(Y) + 1))
+    cost = np.zeros((len(X) + 1, len(Y) + 1))
+    op   = np.zeros((len(X) + 1, len(Y) + 1))
+    op = op.astype(int)
+    for i in range(1, len(X) + 1):
+        op[i, 0] = 2
+        cost[i, 0] = cost[i-1, 0] + costs[op[i, 0]]
+    for j in range(1, len(Y) + 1):
+        op[0, j] = 3
+        cost[0, j] = cost[0, j-1] + costs[op[0, j]]
+
 
     # go through each word filling the table
     for i in range(1, len(X) + 1):
         for j in range(1, len(Y) + 1):
-            # If current letters match, increment previous (i-1, j-1) table element
-            # Else take the previous one, the LCS hasn't changed
-            if X[i - 1] == Y[j - 1]:
-                l[i, j] = l[i - 1, j - 1] + 1
+            if X[i-1] == Y[j-1]:
+                op[i, j] = 0
             else:
-                l[i, j] = max(l[i - 1, j], l[i, j - 1])
-    return l
+                op[i, j] = 1
+            cost[i, j] = cost[i-1, j-1] + costs[op[i, j]]
+            if cost[i, j - 1] + 2 < cost[i, j]:
+                op[i, j] = 3
+                cost[i, j] = cost[i, j - 1] + costs[op[i, j]]
+
+            if cost[i - 1, j] + 2 < cost[i, j]:
+                op[i, j] = 2
+                cost[i, j] = cost[i - 1, j] + costs[op[i, j]]
+
+    return cost, op
 
 def print_transformation_table(l, X, Y):
-    '''
-    Prints LCS table
-    :param l: table, a numpy 2d array
-    :param X: word 1
-    :param Y: word 2
-    :return: none
-    '''
     # print headers
     print('      |   j {a}'.format(a=' '.join([str(i) for i in range(l.shape[1])])))
     print('      |  yj   {a}'.format(a=' '.join([i for i in Y])))
@@ -40,15 +44,6 @@ def print_transformation_table(l, X, Y):
         print('{i}  {b}  |     {a}'.format(a=' '.join([str(int(i)) for i in l[i, ...]]), i=i, b=X[i - 1]))
 
 def assemble_transformation(X, Y, l):
-    '''
-    Assembles longest common subsequence of 2 words, using LCS table
-    :param X: First word, string
-    :param Y: Second word, string
-    :param l: LCS table, numpy array with dimensions len(X) x len(Y)
-    :param i: current index in first word (in the table, since it has len(X) + 1 rows), int
-    :param j: current index in second word (in the table, since it has len(X) + 1 rows), int
-    :return: LCS, string Longest common subsequence
-    '''
     # Find the lengths of words
     i, j = l.shape
     i -= 1

@@ -1,6 +1,6 @@
 
 import lcs
-import transformation
+import transformation as tr
 
 X = 'CATCGA'
 Y = 'GTACCGTCA'
@@ -22,4 +22,14 @@ def find_and_print_lcs(X, Y):
     print('\nLCS = ' + LCS)
     return LCS
 
-find_and_print_lcs(X, Y)
+#find_and_print_lcs(X, Y)
+
+operations = ['copy', 'remove', 'delete', 'insert']
+costs = [-1, 1, 2, 2]
+
+X = 'ACAAGC'
+Y = 'CCGT'
+
+cost, op = tr.compute_transformation_table(X, Y, costs)
+
+lcs.print_lcs_table(op, X, Y)
