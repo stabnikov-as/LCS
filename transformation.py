@@ -86,35 +86,35 @@ def print_transformation_table(cost, op, X, Y, operations):
 
 def assemble_transformation(X, Y, op):
     '''
-    Function that just constructs the sequence of operations that transform one string to another
+    Function that constructs the sequence of operations that transform one string to another
     :param X: first word
     :param Y: second word
     :param op: a 2d numpy array with steps to convert all the Xi to all the Yj
-    :return: a current transformation state, in a form of a string
+    :return: string, a sequence of directions to most cheaply transform one string to another
     '''
 
     # Find the lengths of words
     i, j = op.shape
-    # Set current indeces to the last characters in strings
+    # Set current indices to the last characters in strings
     i -= 1
     j -= 1
 
     # If the current table element is minus one, that means that we are trying to convert two transform one empty string to another
-    if op[i,j] == -1:
-        return ''
+    if op[i, j] == -1:
+        return '\n'
 
     # Based on the current table element, decide which operation was last
     # and recursively call the procedure accordingly
 
     # Last character was copied from X to Y, it was teh same
     elif op[i, j] == 0:
-        return assemble_transformation(X, Y, op[:-1, :-1]) + X[i - 1]
+        return assemble_transformation(X, Y, op[:-1, :-1]) + 'Copy ' + Y[j-1] + '\n'
     # One character replaced by another
     elif op[i, j] == 1:
-        return assemble_transformation(X, Y, op[:-1, :-1]) + Y[j - 1]
+        return assemble_transformation(X, Y, op[:-1, :-1]) + 'Replace ' + X[i - 1] + ' by ' + Y[j - 1] + '\n'
     # Deleted character
     elif op[i, j] == 2:
-        return assemble_transformation(X, Y, op[:-1, :])
+        return assemble_transformation(X, Y, op[:-1, :]) + 'Delete ' + X[i-1] + '\n'
     # Inserted character
     else:
-        return assemble_transformation(X, Y, op[:, :-1])   + Y[j - 1]
+        return assemble_transformation(X, Y, op[:, :-1]) + 'Insert ' + Y[j-1] + '\n'

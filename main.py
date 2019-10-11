@@ -36,7 +36,7 @@ def transform_strings(X, Y, costs, operations):
     # This doesn't really do anything
     # Since we already know what the transformed string is
     # Just constructs the sequence of operations that transform one string to another
-    tr.assemble_transformation(X, Y, op)
+    print(tr.assemble_transformation(X, Y, op))
 
 X = 'CATCGA'
 Y = 'GTACCGTCA'
@@ -49,7 +49,7 @@ Y = 'CCGT'
 operations = ['copy', 'rep', 'del', 'ins']
 costs = [-1, 1, 2, 2]
 
-#transform_strings(X, Y, costs, operations)
+transform_strings(X, Y, costs, operations)
 
 
 
