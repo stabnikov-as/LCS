@@ -1,6 +1,7 @@
 
 import lcs
 import transformation as tr
+import string_matching as sm
 
 
 def find_and_print_lcs(X, Y):
@@ -49,7 +50,14 @@ Y = 'CCGT'
 operations = ['copy', 'rep', 'del', 'ins']
 costs = [-1, 1, 2, 2]
 
-transform_strings(X, Y, costs, operations)
+#transform_strings(X, Y, costs, operations)
+
+alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz ,.'
+alphabet = 'aenhokvyzPSVl., '
+string = 'Pavel Snezhok, Volya.'
+
+sm.fill_next_state(string, alphabet)
+
 
 
 
