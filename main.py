@@ -52,12 +52,13 @@ costs = [-1, 1, 2, 2]
 
 #transform_strings(X, Y, costs, operations)
 
-alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz ,.'
+
 alphabet = 'aenhokvyzPSVl., '
 string = 'Pavel Snezhok, Volya.'
+alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz ,.'
+string = 'popa'
 
-sm.fill_next_state(string, alphabet)
-
+sm.print_next_state_table(sm.fill_next_state(string, alphabet))
 
 
 
