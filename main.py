@@ -52,14 +52,29 @@ costs = [-1, 1, 2, 2]
 
 #transform_strings(X, Y, costs, operations)
 
+def finite_automaton_string_matching(string_to, string_in, alphabet):
+    '''
+    Realises string matching algorythm using finite automaton
+    :param string_to: str, String to match
+    :param string_in: str, String to match in
+    :param alphabet: str, a collection of characters that may be found in strings
+    can use string_in as an alphabet if it is not too long and not all the chars a present
+    :return: no return, prints the results
+    '''
+    # Assemble next_state table
+    next_state = sm.fill_next_state(string_to, string_in)#alphabet)
+    # Print next_state table
+    sm.print_next_state_table(next_state)
+    # Find and print (if toPrint then it's more Verbose) positions in the string where the string_to can be found
+    print(sm.match_strings(string_in, next_state, toPrint = False))
 
-alphabet = 'aenhokvyzPSVl., '
-string = 'Pavel Snezhok, Volya.'
+# alphabet = 'aenhokvyzPSVl., '
 alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz ,.'
-string = 'popa'
+string_to = 'popa'
+string_in  = 'popa shlyopa popo pipa,. dasdlkasdna.,smdndspopa pipa popopopopaaapa'
 
-sm.print_next_state_table(sm.fill_next_state(string, alphabet))
 
+finite_automaton_string_matching(string_to, string_in, alphabet)
 
 
 
